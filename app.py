@@ -11,33 +11,40 @@ classifier_model = joblib.load('logistic_regression.pkl')
 st.title("Tech Use & Wellness Prediction")
 
 with st.form("prediction_form"):
-    col1, col2, col3 = st.columns(3)
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "Informasi Pribadi", 
+        "Penggunaan Teknologi", 
+        "Gaya Hidup", 
+        "Kesehatan Mental"
+    ])
     
-    with col1:
+    with tab1:
         age = st.number_input("Age", min_value=10, max_value=100, step=1, help="Usia pengguna saat ini.")
         gender = st.selectbox("Gender", ["Male", "Female", "Other"], help="Identitas gender pengguna.")
+        location_type = st.selectbox("Location Type", ["Urban", "Suburban", "Rural"], help="Jenis lingkungan tempat tinggal pengguna.")
+        
+    with tab2:
         daily_screen_time_hours = st.number_input("Daily Screen Time (Jam)", min_value=0, step=1, help="Total waktu menatap layar perangkat dalam sehari.")
         phone_usage_hours = st.number_input("Phone Usage (Jam)", min_value=0, step=1, help="Total waktu penggunaan ponsel dalam sehari.")
         laptop_usage_hours = st.number_input("Laptop Usage (Jam)", min_value=0, step=1, help="Total waktu penggunaan laptop dalam sehari.")
         tablet_usage_hours = st.number_input("Tablet Usage (Jam)", min_value=0, step=1, help="Total waktu penggunaan tablet dalam sehari.")
         tv_usage_hours = st.number_input("TV Usage (Jam)", min_value=0, step=1, help="Total waktu menonton TV dalam sehari.")
         social_media_hours = st.number_input("Social Media (Jam)", min_value=0, step=1, help="Total waktu bermain media sosial dalam sehari.")
-        
-    with col2:
         work_related_hours = st.number_input("Work Related (Jam)", min_value=0, step=1, help="Waktu layar yang digunakan khusus untuk bekerja/belajar.")
         entertainment_hours = st.number_input("Entertainment (Jam)", min_value=0, step=1, help="Waktu layar untuk menonton film, video, atau hiburan lainnya.")
         gaming_hours = st.number_input("Gaming (Jam)", min_value=0, step=1, help="Waktu layar untuk bermain game.")
+        
+    with tab3:
         sleep_duration_hours = st.number_input("Sleep Duration (Jam)", min_value=0, step=1, help="Durasi rata-rata waktu tidur harian.")
         sleep_quality = st.slider("Sleep Quality", 1, 10, help="Penilaian subjektif kualitas tidur (1 = Sangat Buruk, 10 = Sangat Baik).")
-        mood_rating = st.slider("Mood Rating", 1, 10, help="Penilaian rata-rata suasana hati (1 = Sangat Buruk, 10 = Sangat Baik).")
-        stress_level = st.slider("Stress Level", 1, 10, help="Tingkat stres yang dirasakan (1 = Sangat Rendah, 10 = Sangat Tinggi).")
         physical_activity_hours_per_week = st.number_input("Physical Activity (Jam/Minggu)", min_value=0, step=1, help="Total waktu aktivitas fisik atau olahraga dalam seminggu.")
-        
-    with col3:
-        location_type = st.selectbox("Location Type", ["Urban", "Suburban", "Rural"], help="Jenis lingkungan tempat tinggal pengguna.")
-        mental_health_score = st.slider("Mental Health Score", 1, 100, help="Skor kesehatan mental keseluruhan berdasarkan asesmen (1-100).")
         eats_healthy = st.selectbox("Eats Healthy", ["Yes", "No"], help="Apakah pengguna menerapkan pola makan sehat?")
         caffeine_intake_mg_per_day = st.number_input("Caffeine Intake (mg)", min_value=0, step=10, help="Estimasi asupan kafein harian dalam miligram.")
+        
+    with tab4:
+        mood_rating = st.slider("Mood Rating", 1, 10, help="Penilaian rata-rata suasana hati (1 = Sangat Buruk, 10 = Sangat Baik).")
+        stress_level = st.slider("Stress Level", 1, 10, help="Tingkat stres yang dirasakan (1 = Sangat Rendah, 10 = Sangat Tinggi).")
+        mental_health_score = st.slider("Mental Health Score", 1, 100, help="Skor kesehatan mental keseluruhan berdasarkan asesmen (1-100).")
         weekly_anxiety_score = st.number_input("Weekly Anxiety Score", min_value=0, step=1, help="Skor tingkat kecemasan mingguan.")
         weekly_depression_score = st.number_input("Weekly Depression Score", min_value=0, step=1, help="Skor tingkat depresi mingguan.")
         mindfulness_minutes_per_day = st.number_input("Mindfulness (Menit)", min_value=0, step=5, help="Durasi aktivitas relaksasi atau meditasi per hari.")
