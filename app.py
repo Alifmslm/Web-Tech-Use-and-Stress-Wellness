@@ -14,11 +14,7 @@ stress_mapping = {0: "High", 1: "Low", 2: "Medium"}
 st.title("Tech Use & Stress Prediction")
 
 with st.form("prediction_form"):
-    tab1, tab2, tab3 = st.tabs([
-        "Demografi", 
-        "Penggunaan Teknologi", 
-        "Gaya Hidup & Fisik"
-    ])
+    tab1, tab2, tab3 = st.tabs(["Demografi", "Penggunaan Teknologi", "Gaya Hidup & Fisik"])
     
     with tab1:
         age = st.number_input("Age", min_value=10, max_value=100, step=1)
@@ -27,11 +23,11 @@ with st.form("prediction_form"):
         
     with tab2:
         daily_screen_time_hours = st.number_input("Daily Screen Time (Jam)", min_value=0, step=1)
+        social_media_hours = st.number_input("Social Media (Jam)", min_value=0, step=1)
         phone_usage_hours = st.number_input("Phone Usage (Jam)", min_value=0, step=1)
         laptop_usage_hours = st.number_input("Laptop Usage (Jam)", min_value=0, step=1)
         tablet_usage_hours = st.number_input("Tablet Usage (Jam)", min_value=0, step=1)
         tv_usage_hours = st.number_input("TV Usage (Jam)", min_value=0, step=1)
-        social_media_hours = st.number_input("Social Media (Jam)", min_value=0, step=1)
         work_related_hours = st.number_input("Work Related (Jam)", min_value=0, step=1)
         entertainment_hours = st.number_input("Entertainment (Jam)", min_value=0, step=1)
         gaming_hours = st.number_input("Gaming (Jam)", min_value=0, step=1)
@@ -72,12 +68,35 @@ if submitted:
     input_class_scaled = classification_scaler.transform(classification_data)
     classification_result = classifier_model.predict(input_class_scaled)[0]
     
-    st.subheader("Hasil Analisis")
-    
     stress_level = stress_mapping[classification_result]
+    
+    st.subheader("Hasil Analisis")
     if stress_level == "High":
         st.error(f"**Prediksi Tingkat Stres:** {stress_level}")
     elif stress_level == "Medium":
         st.warning(f"**Prediksi Tingkat Stres:** {stress_level}")
     else:
         st.success(f"**Prediksi Tingkat Stres:** {stress_level}")
+
+    st.subheader("Rekomendasi Gaya Hidup")
+    rekomendasi = []
+    
+    if stress_level == "High":
+        rekomendasi.append("⚠️ **Kelola Stres:** Cobalah teknik pernapasan dalam atau meditasi 10 menit setiap hari.")
+        rekomendasi.append("🛌 **Perbaiki Tidur:** Prioritaskan kualitas tidur di atas hiburan malam.")
+    elif stress_level == "Medium":
+        rekomendasi.append("⚖️ **Jaga Keseimbangan:** Pertahankan aktivitas fisik agar stres tidak meningkat.")
+    else:
+        rekomendasi.append("✅ **Pertahankan:** Pola hidup Anda saat ini sudah sangat baik untuk menjaga kesehatan mental.")
+        
+    if daily_screen_time_hours > 8:
+        rekomendasi.append("📱 **Digital Detox:** Screen time Anda cukup tinggi, cobalah beristirahat setiap 60 menit bekerja.")
+        
+    if physical_activity_hours_per_week < 2:
+        rekomendasi.append("🏃 **Bergerak Lebih:** Cobalah berjalan kaki atau olahraga ringan minimal 150 menit per minggu.")
+        
+    if sleep_duration_hours < 6:
+        rekomendasi.append("😴 **Waktu Istirahat:** Usahakan tidur 7-8 jam per hari untuk pemulihan otak yang optimal.")
+
+    for i, rec in enumerate(rekomendasi, 1):
+        st.write(f"{i}. {rec}")
