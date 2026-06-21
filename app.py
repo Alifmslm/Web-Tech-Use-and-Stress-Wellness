@@ -76,6 +76,7 @@ def reset_app():
     st.rerun()
 
 st.title("📱 Tech Use & Stress Prediction")
+st.markdown("Aplikasi berbasis Machine Learning ini memprediksi tingkat stres Anda berdasarkan data demografi, pola penggunaan teknologi, serta gaya hidup dan aktivitas fisik. Lengkapi setiap langkah untuk mendapatkan hasil prediksi beserta rekomendasi yang disesuaikan.")
 
 if not st.session_state.predicted:
     st.progress(st.session_state.step / total_steps)
