@@ -205,8 +205,6 @@ if st.session_state.predicted:
     else:
         st.success(f"Prediksi Tingkat Stres : **{stress_level}**")
 
-    st.write(f"Cluster Pengguna : **{cluster}**")
-
     st.divider()
     st.subheader("💡 Rekomendasi")
 
